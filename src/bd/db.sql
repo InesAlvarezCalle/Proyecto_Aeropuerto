@@ -1,4 +1,4 @@
--- Active: 1760438334113@@127.0.0.1@3306@mysql
+-- Active: 1760955899412@@127.0.0.1@3306@aeropuertos
 DROP DATABASE IF EXISTS aeropuertos;
 CREATE DATABASE IF NOT EXISTS aeropuertos;
 USE aeropuertos;
@@ -31,6 +31,17 @@ CREATE TABLE aeropuerto(
     FOREIGN KEY (ciudadId) REFERENCES ciudad(id_ciudad)
 );
 
+-- Tabla relación aeropuertos sin escalas
+CREATE TABLE conexionesSinEscalas(
+    id_aeropuertoOrigen INT,
+    id_aeropuertoDestino INT,
+
+    PRIMARY KEY (id_aeropuertoOrigen, id_aeropuertoDestino),
+    FOREIGN KEY (id_aeropuertoOrigen) REFERENCES aeropuerto(id_aeropuerto),
+    FOREIGN KEY (id_aeropuertoDestino) REFERENCES aeropuerto(id_aeropuerto)
+);
+
+-- DELETE FROM ciudad;
 INSERT INTO ciudad (nombre, pais, poblacion, zona_horaria, latitud, longitud, elevacion, anyo_fundacion) VALUES
 ('Madrid', 'España', 3266000, 'Europe/Madrid', 40.416775, -3.703790, 667, 1561),
 ('Barcelona', 'España', 1620000, 'Europe/Madrid', 41.385064, 2.173404, 12, 15),
@@ -83,6 +94,7 @@ INSERT INTO ciudad (nombre, pais, poblacion, zona_horaria, latitud, longitud, el
 ('Riga', 'Letonia', 632614, 'Europe/Riga', 56.949649, 24.105186, 6, 1201),
 ('Vilna', 'Lituania', 588412, 'Europe/Vilnius', 54.687157, 25.279652, 112, 1323);
 
+-- DELETE FROM aeropuerto;
 INSERT INTO aeropuerto (nombre, codigo, ciudadId, tipo, latitud, longitud, elevacion, terminal, anyo_apertura) VALUES
 ('Aeropuerto Adolfo Suárez Madrid-Barajas', 'MAD', 1, 'Internacional', 40.472222, -3.560833, 610, 4, 1931),
 ('Aeropuerto de Barcelona-El Prat', 'BCN', 2, 'Internacional', 41.297078, 2.078464, 12, 2, 1918),
@@ -134,3 +146,28 @@ INSERT INTO aeropuerto (nombre, codigo, ciudadId, tipo, latitud, longitud, eleva
 ('Aeropuerto de Liubliana-Jože Pučnik', 'LJU', 48, 'Internacional', 46.223611, 14.457500, 388, 1, 1963),
 ('Aeropuerto de Tallin-Lennart Meri', 'TLL', 49, 'Internacional', 59.413317, 24.832844, 40, 1, 1936),
 ('Aeropuerto Internacional de Riga', 'RIX', 50, 'Internacional', 56.923611, 23.971111, 11, 1, 1973);
+
+INSERT INTO conexionesSinEscalas (id_aeropuertoOrigen, id_aeropuertoDestino) VALUES
+(1,2),(1,3),(1,4),(1,6),(1,11),(1,17),(1,20),
+(1,21),(1,23),(1,32),(1,33),(2,6),(2,11),(2,12),
+(2,17),(2,21),(2,23),(2,32),(3,1),(3,2),(3,6),
+(4,1),(4,2),(4,32),(4,23),(5,1),(6,11),(6,12),
+(6,17),(6,20),(6,21),(6,23),(6,32),(6,35),(7,6),
+(7,2),(8,6),(9,6),(10,6),(11,6),(11,12),(11,17),
+(11,20),(11,21),(11,23),(12,11),(12,23),(12,6),
+(13,11),(14,11),(15,11),(16,20),(16,17),(16,6),
+(16,23),(17,20),(17,21),(17,23),(17,6),(18,20),
+(19,20),(20,21),(20,6),(20,23),(20,11),(21,6),
+(21,23),(21,17),(21,20),(21,11),(21,32),(22,21),
+(23,1),(23,2),(23,6),(23,11),(23,17),(23,20),
+(23,21),(24,1),(24,6),(24,11),(25,6),(25,23),
+(26,23),(27,23),(27,6),(27,1),(28,6),(28,20),
+(28,21),(28,23),(29,6),(29,23),(30,6),(30,20),
+(30,23),(30,11),(32,1),(32,2),(32,6),(32,11),
+(32,21),(32,23),(33,1),(33,6),(33,23),(34,6),
+(34,21),(34,23),(35,6),(35,21),(35,23),(36,21),
+(36,23),(36,6),(37,20),(37,21),(37,6),(37,23),
+(39,20),(39,6),(39,23),(41,20),(41,6),(41,23),
+(42,6),(42,23),(42,11),(43,6),(43,23),(43,11),
+(44,6),(44,11),(44,23),(45,20),(45,6),(46,20),
+(46,6),(47,6),(48,6),(49,21),(50,21);
